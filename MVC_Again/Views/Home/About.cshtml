@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+@using (Ajax.BeginForm("Search", "Products",
+    new AjaxOptions
+    {
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET",
+        OnFailure = "searchFailed",
+        LoadingElementId = "ajax-loader",
+        UpdateTargetId = "search-results"
+    }))
+{  
+    <input type="text" name="keyword"/>
+    <input type="submit" value="search"/>
+    <div id="search-results" style="margin: 10px">
+
+    </div>
+    <img id="ajax-loader"
+         src="https://www.ganeshawebtech.com/bestdigitalmarketingcourseinpanchkula/img/loading-icon.gif"
+         style="display: none;width: 100px"/>
+}
+

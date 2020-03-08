@@ -1,0 +1,83 @@
+﻿@model IEnumerable<MVC_Again.Models.Punish>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@using (Ajax.BeginForm("AjaxIndex", "Punishes",
+    new AjaxOptions
+    {
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET",
+        OnFailure = "resultsFailed",
+        LoadingElementId = "ajax-loader",
+        UpdateTargetId = "results",
+        OnSuccess= "fnSuccess"
+    }))
+{
+    <h2>Index</h2>
+    <div class="form-group">
+        <input type="text" name="datefilter" value="" class="form-control" placeholder="Chọn ngày" autocomplete="off" />
+        <input type="date" name="startDate" class="hidden" />
+        <input type="date" name="endDate" class="hidden" />
+    </div>
+    <input type="submit" class="hidden" id="submit" />
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table" id="results">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Student.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Money)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pushUp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.Name)
+                    </td>
+                    <td class="money">
+                        @Html.DisplayFor(modelItem => item.Money)
+                    </td>
+                    <td class="push-up">
+                        @Html.DisplayFor(modelItem => item.pushUp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <hr />
+        <div style="margin-left: 8px" class="sum">
+            <h4>Tổng tiền phạt: 0</h4>
+            <h4>Tổng chống đẩy: 0</h4>
+        </div>
+    <img id="ajax-loader"
+         src="https://www.ganeshawebtech.com/bestdigitalmarketingcourseinpanchkula/img/loading-icon.gif"
+         style="display: none;width: 100px" />
+}
+@section Scripts {
+    @Scripts.Render("~/Scripts/sum-late.js")
+}
+
+
